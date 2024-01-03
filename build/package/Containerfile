@@ -1,0 +1,24 @@
+FROM golang:1.21-alpine AS builder
+
+WORKDIR /src
+
+
+# Need install ca-certificates for tls compatibility for go library 
+RUN apk add --no-cache ca-certificates=20230506-r0 && update-ca-certificates
+
+COPY . .
+
+ENV CGO_ENABLED=0
+
+# Reduce binary size by removing debug information
+RUN go fmt ./... && \
+  go mod tidy && \
+  go build -ldflags "-w -s" -o gateway cmd/gateway/main.go
+
+FROM scratch
+WORKDIR /app
+
+COPY --from=builder /src/gateway .
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+CMD [ "./gateway" ]

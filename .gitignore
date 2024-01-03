@@ -1,0 +1,6 @@
+*.env
+*.exe
+.idea
+.fleet
+.vscode
+
