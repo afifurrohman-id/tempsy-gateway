@@ -1,7 +1,6 @@
 FROM golang:1.20-alpine AS builder
-
+LABEL authors=afif
 WORKDIR /src
-
 
 # Need install ca-certificates for tls compatibility for go library 
 RUN apk add --no-cache \
