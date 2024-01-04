@@ -1,6 +1,6 @@
 module github.com/afifurrohman-id/tempsy-gateway
 
-go 1.21.5
+go 1.20
 
 require (
 	github.com/gofiber/fiber/v2 v2.51.0
