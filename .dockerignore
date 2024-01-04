@@ -1,4 +1,5 @@
 **/*.env
+.github
 .vscode
 .fleet
 .idea
