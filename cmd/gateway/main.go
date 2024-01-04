@@ -1,15 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path"
-	"strings"
 
+	"github.com/afifurrohman-id/tempsy-gateway/pkg/gateway/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/fiber/v2/middleware/proxy"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joho/godotenv"
 )
 
@@ -23,20 +24,14 @@ func init() {
 
 func main() {
 	var (
-		app  = fiber.New()
+		app = fiber.New(fiber.Config{
+			BodyLimit:    30 << 20, // 30MB
+			ErrorHandler: middleware.CatchServerError,
+		})
 		port = os.Getenv("PORT")
 	)
 
-	app.Use(logger.New(), func(ctx *fiber.Ctx) error {
-		hostname := fmt.Sprintf("%s:%s", os.Getenv("HOSTNAME"), port)
-
-		if strings.Contains(ctx.Get(fiber.HeaderAccept), fiber.MIMEApplicationJSON) || strings.Contains(ctx.Get(fiber.HeaderAccept), fiber.MIMEApplicationJSONCharsetUTF8) {
-			log.Info("OK")
-			return proxy.DomainForward(hostname, os.Getenv("SERVER_URL"))(ctx)
-		}
-
-		return proxy.DomainForward(hostname, os.Getenv("CLIENT_URL"))(ctx)
-	})
+	app.Use(recover.New(), compress.New(), logger.New(), favicon.New(), middleware.ProxyGateway)
 
 	if err := app.Listen(":" + port); err != nil {
 		log.Panic(err)

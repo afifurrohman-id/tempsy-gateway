@@ -35,7 +35,6 @@ APP_ENV=development
 PORT=8080
 SERVER_URL=https://api.example.com
 CLIENT_URL=https://example.com
-HOSTNAME=example.com
 EOENV
 ```
 
