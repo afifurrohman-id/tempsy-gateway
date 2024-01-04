@@ -1,6 +1,6 @@
-# Tempsy Gateway
+# [Tempsy Gateway](https://tempsy.afifurrohman.my.id)
 
-> A gateway for [tempsy project](https://tempsy.afifurrohman.my.id)
+> A gateway for [tempsy project](https://github.com/afifurrohman-id/tempsy.git)
 
 ## Usage
 
@@ -33,8 +33,8 @@ cd tempsy-gateway
 cat <<EOENV > configs/.env
 APP_ENV=development
 PORT=8080
-SERVER_URL=https://api.example.com
-CLIENT_URL=https://example.com
+SERVER_URL=https://example.com
+CLIENT_URL=https://www.example.com
 EOENV
 ```
 
