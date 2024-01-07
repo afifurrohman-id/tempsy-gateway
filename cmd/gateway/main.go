@@ -4,7 +4,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/afifurrohman-id/tempsy-gateway/pkg/gateway/middleware"
+	"github.com/afifurrohman-id/tempsy-gateway/pkg/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/compress"
