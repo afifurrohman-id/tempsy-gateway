@@ -11,7 +11,9 @@ COPY . .
 ENV CGO_ENABLED=0
 
 # Reduce binary size by removing debug information
-RUN go fmt ./... && \
+RUN go fix ./... && \
+  go fmt ./... && \
+  go vet ./... && \
   go mod tidy && \
   go build \
   -ldflags "-w -s" \
