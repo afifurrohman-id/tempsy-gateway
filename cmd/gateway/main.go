@@ -31,7 +31,7 @@ func main() {
 		port = os.Getenv("PORT")
 	)
 
-	app.Use(recover.New(), compress.New(), logger.New(), favicon.New(), middleware.ProxyGateway)
+	app.Use(middleware.Cors, recover.New(), compress.New(), logger.New(), favicon.New(), middleware.ProxyGateway)
 
 	if err := app.Listen(":" + port); err != nil {
 		log.Panic(err)
