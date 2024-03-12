@@ -1,10 +1,10 @@
-FROM rust:1.76-alpine AS builder
+FROM rust:1.76-slim AS builder
 WORKDIR /src
 
 # Need install ca-certificates for tls compatibility for go library 
 # hadolint ignore=DL3018
-RUN apk add --no-cache \
-  musl-dev perl make
+# RUN apk add --no-cache \
+#   musl-dev perl make
 # ca-certificates && \
 # update-ca-certificates
 
