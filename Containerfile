@@ -10,11 +10,10 @@ RUN apt-get update && \
 
 COPY . .
 
-ENV CGO_ENABLED=0
+# ENV CGO_ENABLED=0
 
 # Reduce binary size by removing debug information
-RUN cargo fix --allow-dirty --allow-staged && \
-  cargo build -r
+RUN cargo build -r
 
 FROM scratch
 LABEL org.opencontainers.image.authors="afif"
