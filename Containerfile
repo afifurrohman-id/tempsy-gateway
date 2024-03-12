@@ -2,9 +2,9 @@ FROM rust:1.76-slim AS builder
 WORKDIR /src
 
 # Need install ca-certificates for tls compatibility for go library 
-# hadolint ignore=DL3018
+# hadolint ignore=DL3008
 RUN apt-get update && \
-  apt-get install perl -y
+  apt-get install --no-install-recommends perl -y
 # ca-certificates && \
 # update-ca-certificates
 
