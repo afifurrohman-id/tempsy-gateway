@@ -4,7 +4,7 @@ WORKDIR /src
 # Need install ca-certificates for tls compatibility for go library 
 # hadolint ignore=DL3008
 RUN apt-get update && \
-  apt-get install --no-install-recommends perl -y
+  apt-get install --no-install-recommends perl make -y
 # ca-certificates && \
 # update-ca-certificates
 
