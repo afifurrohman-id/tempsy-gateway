@@ -4,7 +4,7 @@ WORKDIR /src
 # Need install ca-certificates for tls compatibility for go library 
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
-  gcc
+  musl-dev
 # ca-certificates && \
 # update-ca-certificates
 
