@@ -12,7 +12,7 @@ COPY . .
 ENV CGO_ENABLED=0
 
 # Reduce binary size by removing debug information
-RUN cargo fix && \
+RUN cargo fix --allow-dirty --allow-staged && \
   cargo build -r
 
 FROM scratch
