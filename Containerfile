@@ -2,7 +2,7 @@ FROM rust:1.76-alpine AS builder
 WORKDIR /src
 
 # Need install ca-certificates for tls compatibility for go library 
-
+# hadolint ignore=DL3018
 # RUN apk add --no-cache \
 #   ca-certificates && \
 #   update-ca-certificates
@@ -13,7 +13,7 @@ ENV CGO_ENABLED=0
 
 # Reduce binary size by removing debug information
 RUN cargo fix && \
-  cargo build -r && 
+  cargo build -r
 
 FROM scratch
 LABEL org.opencontainers.image.authors="afif"
