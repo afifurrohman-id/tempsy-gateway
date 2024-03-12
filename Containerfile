@@ -3,8 +3,8 @@ WORKDIR /src
 
 # Need install ca-certificates for tls compatibility for go library 
 # hadolint ignore=DL3018
-# RUN apk add --no-cache \
-#   musl-dev perl make
+RUN update && \
+  apt install perl -y
 # ca-certificates && \
 # update-ca-certificates
 
