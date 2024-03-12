@@ -9,7 +9,7 @@
 - [x] WSL2 (Windows Subsystem for Linux)
   > Only need if you're using Windows
 - [x] Git (version >= 2.39.x)
-- [x] Go (version >= 1.21.x)
+- [x] Rust toolchains (version >= 1.76.x)
 - [ ] Docker (version >= 24.0.x)
   > Optional, Only need if you want to build image
 
@@ -38,28 +38,22 @@ CLIENT_URL=https://www.example.com
 EOENV
 ```
 
-- Download dependencies
-
-```sh
-go mod tidy
-```
-
 ### Run
 
 - Run Server
 
 ```sh
-go run cmd/gateway/main.go
+cargo run
 ```
 
 - Build
 
 ```sh
-go build -o gateway cmd/gateway/main.go
+cargo build -r
 ```
 
 - Build Image
 
 ```sh
-docker build -t tempsy-gateway -f build/package/Containerfile .
+docker build -t tempsy-gateway -f Containerfile .
 ```

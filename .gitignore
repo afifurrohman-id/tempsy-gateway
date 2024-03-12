@@ -4,3 +4,8 @@
 .fleet
 .vscode
 
+
+
+# Added by cargo
+
+/target

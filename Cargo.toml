@@ -1,0 +1,29 @@
+[package]
+name = "tempsy_gateway"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "gateway"
+path = "src/main.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[profile.release]
+strip = true
+lto = "thin"
+
+[dependencies]
+axum = { version = "0.7", features = ["http2"] }
+dotenvy = "0.15"
+hyper = { version = "1.2", features = ["full"] }
+hyper-tls = { version = "0.6", features = ["vendored"] }
+hyper-util = { version = "0.1", features = ["client-legacy"] }
+regex = "1.10"
+tokio = { version = "1.36", features = ["full"] }
+tower-http = { version = "0.5", features = ["trace", "catch-panic", "cors"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["util"] }
