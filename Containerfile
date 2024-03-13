@@ -9,11 +9,11 @@ FROM chef AS builder
 COPY --from=planner /app/recipe.json recipe.json
 # hadolint ignore=DL3008
 RUN apt-get update && \
- apt-get install \ 
- --no-install-recommends \
- perl make -y && \
- cargo chef cook --release \ 
- --recipe-path recipe.json
+  apt-get install \ 
+  --no-install-recommends \
+  perl make -y && \
+  cargo chef cook --release \ 
+  --recipe-path recipe.json
 COPY . .
 RUN cargo build -r && ls /app/target/release
 
@@ -22,6 +22,7 @@ LABEL org.opencontainers.image.authors="afif"
 LABEL org.opencontainers.image.licenses="MIT"
 WORKDIR /app
 
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/target/release/gateway .
 
 CMD [ "./gateway" ]
