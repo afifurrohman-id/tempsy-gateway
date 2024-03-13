@@ -1,26 +1,27 @@
-FROM rust:1.76-slim AS builder
-WORKDIR /src
+FROM lukemathwalker/cargo-chef:latest-rust-1.76-slim AS chef
+WORKDIR /app
 
-# Need install ca-certificates for tls compatibility for go library 
-# hadolint ignore=DL3008
-RUN apt-get update && \
-  apt-get install --no-install-recommends perl make -y
-# ca-certificates && \
-# update-ca-certificates
-
+FROM chef AS planner
 COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
 
-# ENV CGO_ENABLED=0
-
-# Reduce binary size by removing debug information
-RUN cargo build -r
+FROM chef AS builder 
+COPY --from=planner /app/recipe.json recipe.json
+# hadolint ignore=DL3008
+RUN cargo chef cook --release \ 
+ --recipe-path recipe.json && \
+ apt-get update && \
+ apt-get install \ 
+ --no-install-recommends \
+ perl make -y
+COPY . .
+RUN cargo build -r && ls /app/target/release
 
 FROM scratch
 LABEL org.opencontainers.image.authors="afif"
 LABEL org.opencontainers.image.licenses="MIT"
 WORKDIR /app
 
-COPY --from=builder /src/target/release/gateway .
-# COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /app/target/release/gateway .
 
 CMD [ "./gateway" ]
