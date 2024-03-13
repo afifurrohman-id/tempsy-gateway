@@ -25,6 +25,5 @@ LABEL org.opencontainers.image.licenses="MIT"
 WORKDIR /app
 
 COPY --from=builder /app/target/release/gateway .
-RUN ls /app
 
 CMD [ "./gateway" ]
