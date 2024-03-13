@@ -8,12 +8,12 @@ RUN cargo chef prepare --recipe-path recipe.json
 FROM chef AS builder 
 COPY --from=planner /app/recipe.json recipe.json
 # hadolint ignore=DL3008
-RUN cargo chef cook --release \ 
- --recipe-path recipe.json && \
- apt-get update && \
+RUN apt-get update && \
  apt-get install \ 
  --no-install-recommends \
- perl make -y
+ perl make -y && \
+ cargo chef cook --release \ 
+ --recipe-path recipe.json
 COPY . .
 RUN cargo build -r && ls /app/target/release
 
