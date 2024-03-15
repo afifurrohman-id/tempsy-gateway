@@ -6,7 +6,6 @@ COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder 
-
 # hadolint ignore=DL3008
 RUN apt-get update && \
   apt-get install \ 

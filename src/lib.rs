@@ -60,15 +60,7 @@ async fn gateway_handler(
         path_query
     );
 
-    req.headers_mut().insert(header::HOST, {
-        let host = uri
-            .trim_end_matches('/')
-            .split("://")
-            .nth(1)
-            .unwrap_or_default();
-        host.parse()
-            .unwrap_or_else(|err| panic!("HOST: `{host}`, is invalid for header value: {err}"))
-    });
+    req.headers_mut().remove(header::HOST);
 
     *req.uri_mut() = hyper::Uri::try_from(uri).unwrap_or_default();
     Ok(client
